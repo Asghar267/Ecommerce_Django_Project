@@ -21,7 +21,16 @@
           <p>Quantity: {{ product.quantity }}</p>
 
           <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
-          <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">Add to Cart</a>
+          <form method="post" action="{% url 'add_to_cart' product_id=product.id %}">
+            {% csrf_token %}
+            <button type="submit">Add to cart1 </button>
+        </form>
+        <form action="{% url 'add_to_cart' product.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+        </form>
+          <!-- <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">Add to Cart</a> -->
+
           <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
         </div>
       </div>

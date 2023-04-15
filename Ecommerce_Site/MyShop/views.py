@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Customer, Product, Order, OrderItem, Payment
+from .models import Customer, Product, Order, OrderItem, Payment, Cart
 from .forms import ProductForm
+from django.contrib.auth.decorators import login_required
+
+
 # Create your views here.
 
  
@@ -70,21 +73,44 @@ def create_product(request):
 #         else:
 #             return render(request, 'create_product.html', {'form': form})
 
+# def add_to_cart(request, product_id):
+#     # Get the product object from the database
+#     product = get_object_or_404(Product, id=product_id)
+
+#     # Get the user's shopping cart from the session
+#     cart = request.session.get('cart', {})
+    
+#     # Add the product to the cart or increment its quantity if it's already there
+#     if product_id in cart:
+#         cart[product_id]['quantity'] += 1
+#     else:
+#         cart[product_id] = {'quantity': 1, 'price': str(product.price)}
+    
+#     # Save the updated cart in the session
+#     request.session['cart'] = cart
+    
+#     # Redirect the user back to the product page or wherever you want
+#     return redirect('product_detail', product_id=product_id)
+
+# @login_required
 def add_to_cart(request, product_id):
-    # Get the product object from the database
-    product = get_object_or_404(Product, id=product_id)
-    
-    # Get the user's shopping cart from the session
-    cart = request.session.get('cart', {})
-    
-    # Add the product to the cart or increment its quantity if it's already there
-    if product_id in cart:
-        cart[product_id]['quantity'] += 1
-    else:
-        cart[product_id] = {'quantity': 1, 'price': str(product.price)}
-    
-    # Save the updated cart in the session
-    request.session['cart'] = cart
-    
-    # Redirect the user back to the product page or wherever you want
-    return redirect('product_detail', product_id=product_id)
+    product = Product.objects.get(pk=product_id)
+    cart_item, created = Cart.objects.get_or_create(user=request.user, product=product)
+
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+
+    return redirect('cart')
+
+# @login_required
+def cart(request):
+    cart_items = Cart.objects.filter(user=request.user)
+    return render(request, 'cart.html', {'cart_items': cart_items})
+
+# @login_required
+def remove_from_cart(request, cart_id):
+    cart_item = get_object_or_404(Cart, pk=cart_id)
+    if cart_item.user == request.user:
+        cart_item.delete()
+    return redirect('cart')
