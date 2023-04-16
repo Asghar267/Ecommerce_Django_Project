@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Create Order{% endblock %}
+
+{% block content %}
 <div class="container">
   <div class="row">
     <div class="col-md-6">
@@ -8,7 +12,7 @@
           <label for="customer">Customer</label>
           <select name="customer" id="customer" class="form-control">
             {% for customer in customers %}
-              <option value="{{ customer.id }}">{{ customer.name }}</option>
+              <option value="{{ customer.id }}">{{ customer.first_name }}</option>
             {% endfor %}
           </select>
         </div>
@@ -16,7 +20,7 @@
           <label for="product">Product</label>
           <select name="product" id="product" class="form-control">
             {% for product in products %}
-              <option value="{{ product.id }}">{{ product.name }} (${{ product.price }})</option>
+              <option value="{{ product.id }}">{{ product.product_name }} (${{ product.price }})</option>
             {% endfor %}
           </select>
         </div>
@@ -29,3 +33,4 @@
     </div>
   </div>
 </div>
+{% endblock %}
