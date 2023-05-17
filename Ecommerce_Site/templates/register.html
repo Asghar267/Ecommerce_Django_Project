@@ -25,10 +25,7 @@
           action="{% url 'register_user' %}"
           enctype="multipart/form-data">
           {% csrf_token %} {{ form.path }}
-
-          
-
-          
+ 
           <div class="input-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text"
@@ -168,5 +165,7 @@
     outline: 0px !important;
   }
 </style>
-
-{{form}} {% endblock %}
+{% for i in form %}
+{{i}}
+{% endfor %}
+ {% endblock %}

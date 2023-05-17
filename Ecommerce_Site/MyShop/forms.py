@@ -22,7 +22,7 @@ class ProductForm(forms.ModelForm):
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ["username", "email", 'password1', 'password2']
+        fields = ["first_name","username", "email", 'password1', 'password2']
 
 
 class SendFileForm(forms.Form):
@@ -32,6 +32,7 @@ class SendFileForm(forms.Form):
 class CreateUserForm2(UserCreationForm):
     path = forms.CharField(required=False)
 
+    first_name = forms.CharField(label='full_name', min_length=5, max_length=150)
     username = forms.CharField(label='username', min_length=5, max_length=150)
     email = forms.EmailField(label='email')
     password1 = forms.CharField(label='password', widget=forms.PasswordInput)
@@ -62,6 +63,7 @@ class CreateUserForm2(UserCreationForm):
 
     def save(self, commit=True):
         user = User.objects.create_user(
+            self.cleaned_data['full_name'],
             self.cleaned_data['username'],
             self.cleaned_data['email'],
             self.cleaned_data['password1']

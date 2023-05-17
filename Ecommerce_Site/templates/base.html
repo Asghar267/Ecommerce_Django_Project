@@ -96,26 +96,20 @@
       </div>
     </div>
   </nav>
+  <!-- {# if messages %} {% for message in messages #} -->
 
-
-
-
-
-
-  {% if messages %} {% for message in messages %}
-
-<div id="alert-div" class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
-  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:" style="width: 16px; height: 16px">
-    <use xlink:href="#check-circle-fill" />
-  </svg>
-  <div>{{message}}</div>
-</div>
-{% endfor %} {% endif %}
-<script>
-  setTimeout(function () {
-    document.getElementById("alert-div").remove();
-  }, 2000);
-</script>
+  <!-- <div id="alert-div" class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:" style="width: 16px; height: 16px">
+      <use xlink:href="#check-circle-fill" />
+    </svg>
+    <div>{{message}}</div>
+  </div>
+  {# endfor #} {#cendif #}
+  <script>
+    setTimeout(function () {
+      document.getElementById("alert-div").remove();
+    }, 2000);
+  </script> -->
 
 
   <div class="container" id="content">
@@ -194,7 +188,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js"
 
 
 

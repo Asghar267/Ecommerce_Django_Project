@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Order,  Customer, Cart, Payment, Shipping_Address, Category
+from .models import Product, Order,  Customer, Cart, Payment, Shipping_Address, Category,User
 # from django.contrib.auth.models import User
 
 
@@ -46,7 +46,6 @@ admin.site.register(Customer, CustomerAdmin)
 # class UserAdmin(admin.ModelAdmin):
 #     list_display = ('USERNAME', 'EMAIL ADDRESS',
 #                     'FIRST NAME', 'STAFF STATUS', 'PASSWORD')
-
 
 # admin.site.register(User, UserAdmin)
 

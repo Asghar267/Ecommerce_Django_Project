@@ -1,4 +1,5 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
+{% load cart_tags %}
 {% block title %}<title>User Profile - E-commerce Site</title>{% endblock %}
 
 {% block content %}
@@ -25,29 +26,23 @@
                 <th>Order Date</th>
                 <th>Image</th>
                 <th>Items Purchased</th>
+                <th>Qty</th>
                 <th>Total Amount</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              <!-- <tr>
-                  <td>10/1/2022</td>
-                  <td>123456</td>
-                  <td>Product 1, Product 2</td>
-                  <td>$50.00</td>
-                </tr> -->
-
               {% for or in order %}
               <tr>
                 <td>{{or.order_date}}</td>
                 <td>
                   <img style="height: 80px" class="rounded-circle" src="{{  or.orderitem.product.image.url }}" alt="" />
                 </td>
-
-                <td>{{or.quantity}}</td>
                 <td>{{or.orderitem}}</td>
-                <td>${{or.total_price}}</td>
+                <td>{{or.quantity}}</td>
 
+
+                <td>{{ or|price_total_profile }}</td>
                 {% if or.status == "pending" %}
                 <td>
                   <span class="badge bg-warning text-dark">Pending</span>
@@ -125,6 +120,6 @@
     </div>
   </div>
 </div>
- 
+
 
 {% endblock %}

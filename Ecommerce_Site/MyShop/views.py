@@ -6,56 +6,51 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .templatetags import cart_tags
 from django.core.mail import send_mail
-from .forms import CustomerRegistrationForm, CustomerLoginForm
-
- 
 
 
 def register_user(request):
-    # form = CreateUserForm()
+    form = CreateUserForm()
 
     if request.method == "POST":
-        # form = CreateUserForm(request.POST)
+        form = CreateUserForm(request.POST)
         username = request.POST['username']
-        full_name = request.POST['full_name']
+        first_name = request.POST['full_name']
         email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        print("username:",username)
-        print("password1:",password1)
-        print("password1:",password1)
+        password = request.POST['password1']
+        confirm_password = request.POST['password2']
+        print("username:", username)
+        print("password1:", password)
+        print("confirm_password:", confirm_password)
 
-        customer = Customer.objects.get_or_create(full_name=full_name, username=username, email=email, password=password1)
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return redirect('register_user')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username is already taken.")
+            return redirect(register_user)
+
+        user = User.objects.create_user(
+            first_name=first_name, username=username, email=email, password=password)
+        user.save()
+        messages.success(
+            request, "Registration successful. You can now log in.")
+
         # print("Field Error:", field.name,  field.errors) # debugging
         # print("Form Error:", form.errors)
-        if customer:
-            # customer.save()
-            # username = form.cleaned_data.get('username')
-            # messages.success(request, "Account created for " + username)
-            
-            redirect('login_user')
 
-    # context = {"form": form}
-    return render(request, "register.html")
+        redirect('login_user')
+
+    context = {"form": form}
+    return render(request, "register.html", context)
 
 
 def loginUser(request):
-    # form = CreateUserForm()
-    # context = {"form": form}
     if request.method == "POST":
-        print("username1 :")
-        # form = CreateUserForm(request.POST)
         username1 = request.POST['username']
         password1 = request.POST['password1']
         user = authenticate(request, username=username1, password=password1)
-        # user = Customer.objects.filter(username=username1).first()
-        print("dgfofsdjl",user)
-        print("username:", username1)
-        print("password1 :", password1)
-        print("authenticate user:", user)
-
         if user is not None:
             login(request, user)
             next_param = request.GET.get('next')
@@ -70,6 +65,7 @@ def loginUser(request):
             return render(request, "login.html")
 
     return render(request, "login.html")
+
 
 @login_required(login_url='login_user')
 def logoutUser(request):
@@ -169,7 +165,7 @@ def cart(request):
         order_details += "Order Items:\n"
         for item in cart.values():
             product = Product.objects.get(pk=item['product_id'])
-            order_details += f"Product: {product.product_name}, Quantity: {item['quantity']}\n"
+            order_details += f"\nProduct: {product.product_name},\nQuantity: {item['quantity']}\n"
 
         send_mail(
             'Order Confirmation',
@@ -177,7 +173,7 @@ def cart(request):
             'asgharabbasikalhoro@gmail.com',  # Replace with your email address
             [user_r.email],  # Send email to the customer's email address
             fail_silently=False,
-        )    
+        )
 
         # Clear the cart in the session
         request.session['cart'] = {}
