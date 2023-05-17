@@ -26,17 +26,35 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.product_list, name='product_list'),
 
-    path('customers/<int:customer_id>', views.customer_detail, name='customer_detail'),
+    # path('customers/<int:customer_id>',
+    #      views.customer_detail, name='customer_detail'),
+
     path('products/<int:product_id>', views.product_detail, name='product_detail'),
-    path('add-product', views.create_product, name='add-product'),
+    # path('add-product', views.create_product, name='add-product'),
 
     path('orders/<int:order_id>/', views.order_detail, name='order_detail'),
-    path('orders/create', views.create_order, name='create_order'),
+    # path('orders/create', views.create_order, name='create_order'),
     path('product/<int:product_id>/add_to_cart/',views.add_to_cart, name='add_to_cart'),
-    path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('add_to_cart/<int:product_id>/',views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart, name='cart'),
     path('remove_from_cart/<int:cart_id>/',views.remove_from_cart, name='remove_from_cart'),
 
+    path('shipping_address', views.ShippingAddress, name='shipping_address'),
+ 
+    path('register/', views.register_user, name='register_user'),
+    path('signin/', views.loginUser, name='login_user'),
+    path('logout/', views.logoutUser, name='logout_user'),
+    path('profile', views.profileUser, name='profile_user'),
+
+    # path('cart/', cart_view, name='cart_view'),
+    path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('cart/remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
+
+
+    #  path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    # path('cart/', views.view_cart, name='cart'),
+    # path('update_cart/<int:product_id>/', views.update_cart, name='update_cart'),
+    # path('remove_from_cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

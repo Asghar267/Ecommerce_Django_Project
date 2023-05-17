@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MyShop',
+    'django.contrib.humanize',
   
 
 ]
@@ -65,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                 'MyShop.context_processors.cart_item_count',
             ],
         },
     },
@@ -124,3 +126,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_NAME = 'myapp_session_id'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # The SMTP server port (e.g., 587 for TLS)
+EMAIL_USE_TLS = True  # Use TLS encryption for SMTP
+EMAIL_HOST_USER = 'asgharabbasikalhoro@gmail.com'  # Your email address
+# EMAIL_HOST_PASSWORD = 'heist00723'  # Your email password or application-specific password
+EMAIL_HOST_PASSWORD = 'nklqvyhpmnvoxrfv'  # Your email password or application-specific password
+
+DEFAULT_FROM_EMAIL = 'asgharabbasikalhoro@gmail.com'
