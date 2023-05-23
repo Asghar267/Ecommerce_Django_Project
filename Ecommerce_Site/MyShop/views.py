@@ -223,8 +223,7 @@ def ShippingAddress(request):
         shipping_state = request.POST.get('shipping_state')
         shipping_country = request.POST.get('shipping_country')
         shipping_zip_code = request.POST.get('shipping_zip_code')
-        print(
-            shipping_address, shipping_city, shipping_state, shipping_country, shipping_zip_code)
+        print(shipping_address, shipping_city, shipping_state, shipping_country, shipping_zip_code)
 
         # Create a new ShippingAddress object with the submitted data
         new_shipping_address = Shipping_Address(
