@@ -45,11 +45,26 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'product_list' %}">Products</a>
-          </li>
           
-         
+          <li>
+          
+
+          <div class="container-fluid">
+            <form class="d-flex" action="{% url 'search' %}" method="GET" role="search">
+              <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search"  value="{{ search_term }}">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+          
+
+
+      </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+          </li> -->
+          
+        </ul>
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
             <span class="cart-count">{{ cart_count }}</span>
@@ -59,8 +74,7 @@
           </li>
 
 
-        </ul>
-        <ul class="navbar-nav ms-auto">
+       
           <li class="nav-item">
             <a class="nav-link" href="{% url 'profile_user' %}">Profile</a>
           </li>

@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -137,7 +140,12 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  # The SMTP server port (e.g., 587 for TLS)
 EMAIL_USE_TLS = True  # Use TLS encryption for SMTP
 EMAIL_HOST_USER = 'asgharabbasikalhoro@gmail.com'  # Your email address
-# EMAIL_HOST_PASSWORD = 'heist00723'  # Your email password or application-specific password
-EMAIL_HOST_PASSWORD = 'nklqvyhpmnvoxrfv'  # Your email password or application-specific password
+EMAIL_HOST_PASSWORD = 'nklqvy hpmnvoxrfv'  # Your email password or application-specific password
 
 DEFAULT_FROM_EMAIL = 'asgharabbasikalhoro@gmail.com'
+
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+
+STATICFILES_DIRS = (os.path. join(BASE_DIR,"static"), )
+
+django_heroku.settings(locals())

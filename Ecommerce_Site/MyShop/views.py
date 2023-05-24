@@ -8,6 +8,18 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
+from django.db.models import Q
+
+
+def search(request):
+    search_term = request.GET.get('q')
+    print("search_term: ",search_term)
+    if not search_term:
+        products = Product.objects.all()
+    else:
+        products = Product.objects.filter(product_name__icontains=search_term)
+    return render(request, 'product_list.html', {'products': products,'search_term': search_term})
+
 
 def register_user(request):
     form = CreateUserForm()
