@@ -71,6 +71,11 @@ class CreateUserForm2(UserCreationForm):
         return user
 
 
+from django import forms
+
+class BulkProductUploadForm(forms.Form):
+    csv_file = forms.FileField()
+
 # class ProductForm(forms.Form):
 #     product_name = forms.CharField(max_length=100)
 #     product_category = forms.CharField(max_length=100)

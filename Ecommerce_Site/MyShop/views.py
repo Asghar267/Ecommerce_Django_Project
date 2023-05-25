@@ -1,24 +1,50 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from .models import Customer, Product, Order, Shipping_Address, Payment, Cart
-from .forms import CreateUserForm
+from .models import Customer, Product, Order, Shipping_Address, Payment, Cart, Category
+from .forms import CreateUserForm, BulkProductUploadForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+import csv
 
-from django.db.models import Q
+
+def bulk_product_upload(request):
+    if request.method == 'POST':
+        form = BulkProductUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['csv_file']
+            decoded_file = csv_file.read().decode('utf-8').splitlines()
+            reader = csv.DictReader(decoded_file)
+            for row in reader:
+                name = row['name']
+                price = row['price']
+                # Process other fields as needed
+
+                # Create product object
+                product = Product(name=name, price=price)
+                # Set other fields
+
+                product.save()
+
+            # Redirect to a page displaying the product list
+            return redirect('product_list')
+
+    else:
+        form = BulkProductUploadForm()
+
+    return render(request, 'bulk_product_upload.html', {'form': form})
 
 
 def search(request):
     search_term = request.GET.get('q')
-    print("search_term: ",search_term)
+    print("search_term: ", search_term)
     if not search_term:
         products = Product.objects.all()
     else:
         products = Product.objects.filter(product_name__icontains=search_term)
-    return render(request, 'product_list.html', {'products': products,'search_term': search_term})
+    return render(request, 'product_list.html', {'products': products, 'search_term': search_term})
 
 
 def register_user(request):
@@ -103,7 +129,13 @@ def customer_detail(request, customer_id):
 
 def product_list(request):
     products = Product.objects.all()
-    return render(request, 'product_list.html', {'products': products})
+    categories = Category.objects.all()
+    categoryId = request.GET.get("category")
+
+    if categoryId:  # filter products
+        category = Category.objects.get(id=categoryId)
+        products = Product.objects.filter(product_category=category)
+    return render(request, 'product_list.html', {'products': products, 'categories': categories})
 
 
 def product_detail(request, product_id):
@@ -159,8 +191,10 @@ def cart(request):
         # Create a new Cart object for each item in the cart
         cart = request.session.get('cart', {})
         for item in cart.values():
-            product = Product.objects.get(pk=item['product_id'])
-            total_price = product.price * item['quantity']
+            item_qty = item['quantity']
+            product = get_object_or_404(Product, pk=item['product_id'])
+            total_price = product.price * item_qty
+
             cart_item, created = Cart.objects.get_or_create(
                 user=request.user, product=product, defaults={'quantity': item['quantity']})
 
@@ -168,6 +202,8 @@ def cart(request):
                                          shipping=shipping_Address, total_price=total_price, status="pending")
 
             order.save()
+            product.quantity -= item_qty
+            product.save()
             if not created:
                 cart_item.quantity += item['quantity']
                 cart_item.save()
@@ -235,7 +271,8 @@ def ShippingAddress(request):
         shipping_state = request.POST.get('shipping_state')
         shipping_country = request.POST.get('shipping_country')
         shipping_zip_code = request.POST.get('shipping_zip_code')
-        print(shipping_address, shipping_city, shipping_state, shipping_country, shipping_zip_code)
+        print(shipping_address, shipping_city, shipping_state,
+              shipping_country, shipping_zip_code)
 
         # Create a new ShippingAddress object with the submitted data
         new_shipping_address = Shipping_Address(

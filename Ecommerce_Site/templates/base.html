@@ -28,16 +28,13 @@
 
 
 
- 
-</head>
-
-<body>
 
 
- <!-- <nav class="navbar navbar-expand-lg bg-light"> -->
+
+
+  <!-- <nav class="navbar navbar-expand-lg bg-light"> -->
   <nav class="navbar  navbar-expand-lg navbar-black " style="background-color: #e3f2fd;">
     <div class="container-fluid">
-
       <a class="navbar-brand" href="{% url 'product_list' %}">My Ecommerce Site</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,24 +42,22 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          
           <li>
-          
-
-          <div class="container-fluid">
-            <form class="d-flex" action="{% url 'search' %}" method="GET" role="search">
-              <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search"  value="{{ search_term }}">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-          
+            <div class="container-fluid">
+              <form class="d-flex" action="{% url 'search' %}" method="GET" role="search">
+                <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search"
+                  value="{{ search_term }}">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
 
 
-      </li>
+
+          </li>
           <!-- <li class="nav-item">
             <a class="nav-link" href="{% url 'product_list' %}">Products</a>
           </li> -->
-          
+
         </ul>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
@@ -72,9 +67,10 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
           </li>
+         
 
 
-       
+
           <li class="nav-item">
             <a class="nav-link" href="{% url 'profile_user' %}">Profile</a>
           </li>
@@ -125,59 +121,61 @@
     }, 2000);
   </script> -->
 
+</head>
 
-  <div class="container" id="content">
+<body>
+  <!-- <div class="container" id="content"> -->
     {% block content %} {% endblock %}
-  </div>
+  <!-- </div> -->
 
 </body>
-  <div id="footer" class="my-4">
-    {% block footer %}
-    <footer class="bg-light py-3">
-      <!-- <footer class="bg-dark text-white py-4"> -->
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <h5>About Us</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse rutrum nisi eu massa gravida, non
-              elementum risus rhoncus.</p>
-          </div>
-          <div class="col-md-4">
-            <h5>Contact Us</h5>
-            <ul class="list-unstyled">
-              <li><i class="fas fa-map-marker-alt"></i> 123 Main St, Anytown USA</li>
-              <li><i class="fas fa-phone"></i> (123) 456-7890</li>
-              <li><i class="fas fa-envelope"></i> info@example.com</li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <h5>Connect with Us</h5>
-            <ul class="list-unstyled">
-              <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-              <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-              <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-            </ul>
-          </div>
+<div id="footer" class="my-4">
+  {% block footer %}
+  <footer class="bg-light py-3">
+    <!-- <footer class="bg-dark text-white py-4"> -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5>About Us</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse rutrum nisi eu massa gravida, non
+            elementum risus rhoncus.</p>
         </div>
-    
-        <hr>
-        <div class="row mt-4">
-          <div class="col-md-6">
-            <p>&copy; 2023 My Ecommerce Site. All Rights Reserved.</p>
-          </div>
-          <div class="col-md-6 text-md-end">
-            <ul class="list-inline">
-              <li class="list-inline-item"><a href="#"><i class="fab fa-cc-visa"></i></a></li>
-              <li class="list-inline-item"><a href="#"><i class="fab fa-cc-mastercard"></i></a></li>
-              <li class="list-inline-item"><a href="#"><i class="fab fa-cc-paypal"></i></a></li>
-            </ul>
-          </div>
+        <div class="col-md-4">
+          <h5>Contact Us</h5>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-map-marker-alt"></i> 123 Main St, Anytown USA</li>
+            <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+            <li><i class="fas fa-envelope"></i> info@example.com</li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Connect with Us</h5>
+          <ul class="list-unstyled">
+            <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          </ul>
         </div>
       </div>
-    </footer>
-    
-    {% endblock %}
-  </div>
+
+      <hr>
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <p>&copy; 2023 My Ecommerce Site. All Rights Reserved.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="#"><i class="fab fa-cc-visa"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-cc-mastercard"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-cc-paypal"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  {% endblock %}
+</div>
 
 
 
@@ -202,10 +200,4 @@
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js"
-
-
-
-
-
-</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js" </html>

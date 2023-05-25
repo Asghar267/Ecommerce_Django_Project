@@ -30,12 +30,14 @@ class Customer(models.Model):
 
 
 class Product(models.Model):
+
+    lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=150)
     # product_category = models.CharField(max_length=50)
     product_category = models.ForeignKey(
         Category, on_delete=models.CASCADE, default=1)
-    description = models.TextField()
+    description = models.TextField(default=lorem)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(
         upload_to='product_images/', blank=True, null=True)
