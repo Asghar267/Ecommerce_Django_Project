@@ -1,36 +1,24 @@
 {% extends 'base.html' %} {% block content %}
 
-<link
-  rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-  crossorigin="anonymous"
-/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link
-  rel="stylesheet"
-  href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-  integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
-  crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+  integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous" />
 
 <div class="container h-100">
   <div class="d-flex justify-content-center h-100">
     <div class="user_card">
-      <div class="d-flex justify-content-center">
-        <h3 id="form-title">REGISTER ACCOUNT</h3>
+      <div class="d-flex justify-content-center mx-2 my-2">
+        <h3 id="form-title">REGISTER</h3>
       </div>
       <div class="d-flex justify-content-center form_container">
-        <form
-          method="POST"
-          action="{% url 'register_user' %}"
-          enctype="multipart/form-data">
+        <form method="POST" action="{% url 'register_user' %}" enctype="multipart/form-data">
           {% csrf_token %} {{ form.path }}
- 
+
           <div class="input-group mb-3">
             <div class="input-group-append">
-              <span class="input-group-text"
-                ><i class="fas fa-user"></i
-              ></span>
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
             <input type="text" name="full_name" placeholder="full name" class="form-control" />
           </div>
@@ -44,9 +32,7 @@
 
           <div class="input-group mb-2">
             <div class="input-group-append">
-              <span class="input-group-text"
-                ><i class="fas fa-envelope-square"></i
-              ></span>
+              <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
             </div>
             <input type="email" name="email" placeholder="Password..." class="form-control" />
           </div>
@@ -64,9 +50,9 @@
             <input type="password" name="password2" placeholder="Password..." class="form-control" />
           </div>
 
-          <div class="d-flex justify-content-center mt-3 login_container">
-            <button type="submit" class="btn btn-primary">
-              Register Account
+          <div class="d-flex justify-content-center mt-4 login_container">
+            <button type="submit" class="btn">
+              <b> Register</b>
             </button>
 
             <!-- <input class="btn login_btn" type="submit" value="Register Account"> -->
@@ -106,16 +92,18 @@
   html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    background: #7abecc !important;
+    height: 85%;
+    /* background: #7abecc !important; */
+    background: #ffffff !important;
+    /* background: rgb(228, 228, 228) !important; */
   }
 
   .user_card {
     width: 350px;
-    /* margin-top: auto; */
-    margin-top: 80px;
+    margin-top: auto;
     margin-bottom: auto;
-    background: #74cfbf;
+    /* background: #74cfbf; */
+    background: rgb(228, 228, 228);
     position: relative;
     display: flex;
     justify-content: center;
@@ -134,12 +122,16 @@
   }
 
   #form-title {
-    color: #fff;
+    /* color: #fff; */
+    color: black;
   }
 
-  .login_btn {
+  .login_btn,
+  .btn {
     width: 100%;
-    background: #33ccff !important;
+    /* background:  !important; */
+    background: #faaf36 !important;
+    /* background: g !important; */
     color: white !important;
   }
 
@@ -155,7 +147,7 @@
   .input-group-text {
     background: #f7ba5b !important;
     color: white !important;
-    border: 0 !important;
+    border: 2 !important;
     border-radius: 0.25rem 0 0 0.25rem !important;
   }
 
@@ -165,7 +157,5 @@
     outline: 0px !important;
   }
 </style>
-{% for i in form %}
-{{i}}
-{% endfor %}
- {% endblock %}
+
+{% endblock %}

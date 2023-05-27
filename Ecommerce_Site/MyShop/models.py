@@ -51,6 +51,7 @@ class Shipping_Address(models.Model):
 
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
+    contact = models.CharField(max_length=14, null=True)
     shipping_address = models.CharField(max_length=100, null=True)
     shipping_city = models.CharField(max_length=50, null=True)
     shipping_state = models.CharField(max_length=50, null=True)

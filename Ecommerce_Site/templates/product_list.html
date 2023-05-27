@@ -39,6 +39,12 @@
   .details_btn:hover {
     background-color: #e67e22;
   }
+
+  .card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
 </style>
 
 
@@ -52,8 +58,14 @@
     <div class="col-lg-2">
       <div class="list-group">
         <a href="/" class="list-group-item list-group-item-action">All Products</a>
+        <br>
+
         {% for category in categories %}
-        <a href="/?category={{category.id}}" class="list-group-item list-group-item-action">{{category.name}}</a>
+
+        <a href="/?category={{category.id}}"
+          class="list-group-item list-group-item-action table table-hover">{{category.name}}</a>
+        <!-- <a href="/?category={{category.id}}" class="list-group-item list-group-item-action hover">{{category.name}}</a> -->
+        <!-- <a href="/?category={{category.id}}" tyle="background-color: grey;" class="list-group-item list-group-item-action table table-hover">{{category.name}}</a> -->
         {% endfor %}
       </div>
     </div>
@@ -64,8 +76,7 @@
       <div class="row mx-auto">
         {% for product in products %}
 
-
-        <div class="card mx-auto mb-2" id="{{product.id}}" style="width: 15rem;">
+        <div class="card mx-auto mb-2 card-hover" id="{{product.id}}" style="width: 15rem;">
 
 
           <img src="{{ product.image }}" class="card-img-top" alt="https://via.placeholder.com/150" />
@@ -86,24 +97,23 @@
               <div class="form-group">
                 <p>
                   {% if product.quantity == 0 %}
-                  <p>Out of Stock</p>
-                  {% else %}
-                  <p>Items: {{ product.quantity }}</p>
-                  {% endif %}
-                  <input type="number" aria-placeholder="Quantity" placeholder="Quantity" name="quantity" id="quantity"
-                    class="form-control" value="1" min="1" />
+                <p>Out of Stock</p>
+                {% else %}
+                <p>Items: {{ product.quantity }}</p>
+                {% endif %}
+                <input type="number" aria-placeholder="Quantity" placeholder="Quantity" name="quantity" id="quantity"
+                  class="form-control" value="1" min="1" />
                 </p>
               </div>
               {% if product.quantity == 0 %}
-              
+
               <button type="submit" class="btn btn-primary add-to-cart-button disabled">Add Cart</button>
               <a href="{% url 'product_detail' product.id %}"
                 class="btn btn-primary details_btn  mx-1 disabled">Details</a>
 
               {% else %}
               <button type="submit" class="btn btn-primary add-to-cart-button">Add Cart</button>
-              <a href="{% url 'product_detail' product.id %}"
-                class="btn btn-primary details_btn  mx-1">Details</a>
+              <a href="{% url 'product_detail' product.id %}" class="btn btn-primary details_btn  mx-1">Details</a>
 
               {% endif %}
             </form>
@@ -123,7 +133,7 @@
           </li>
           <li class="page-item"><a class="page-link" href="#">1</a></li>
           <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">2</a>
+            <a class="page-link" style="background-color: #f39c12;" href="#">2</a>
           </li>
           <li class="page-item"><a class="page-link" href="#">3</a></li>
           <li class="page-item">
@@ -135,54 +145,5 @@
     {% endblock %}
 
 
-    {% block footer %}
-    <footer class="bg-light py-3">
-      <!-- <footer class="bg-dark text-white py-4"> -->
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <h5>About Us</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse rutrum nisi eu massa gravida, non
-              elementum risus rhoncus.</p>
-          </div>
-          <div class="col-md-4">
-            <h5>Contact Us</h5>
-            <ul class="list-unstyled">
-              <li><i class="fas fa-map-marker-alt"></i> 123 Main St, Anytown USA</li>
-              <li><i class="fas fa-phone"></i> (123) 456-7890</li>
-              <li><i class="fas fa-envelope"></i> info@example.com</li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <h5>Connect with Us</h5>
-            <ul class="list-unstyled">
-              <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-              <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-              <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <hr>
-        <div class="row mt-4">
-          <div class="col-md-6">
-            <p>&copy; 2023 My Ecommerce Site. All Rights Reserved.</p>
-          </div>
-          <div class="col-md-6 text-md-end">
-            <ul class="list-inline">
-              <li class="list-inline-item"><a href="#"><i class="fab fa-cc-visa"></i></a></li>
-              <li class="list-inline-item"><a href="#"><i class="fab fa-cc-mastercard"></i></a></li>
-              <li class="list-inline-item"><a href="#"><i class="fab fa-cc-paypal"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-
-
-    {% endblock %}
-
   </div>
 </div>
-{% include 'footer.html' %}

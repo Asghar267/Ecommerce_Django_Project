@@ -78,6 +78,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Ecommerce_Site.wsgi.application'
 
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -144,7 +150,7 @@ EMAIL_HOST_PASSWORD = 'nklqvy hpmnvoxrfv'  # Your email password or application-
 
 DEFAULT_FROM_EMAIL = 'asgharabbasikalhoro@gmail.com'
 
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 STATICFILES_DIRS = (os.path. join(BASE_DIR,"static"), )
 

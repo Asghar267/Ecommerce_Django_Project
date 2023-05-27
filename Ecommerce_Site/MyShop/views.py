@@ -7,34 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-import csv
-
-
-def bulk_product_upload(request):
-    if request.method == 'POST':
-        form = BulkProductUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            csv_file = request.FILES['csv_file']
-            decoded_file = csv_file.read().decode('utf-8').splitlines()
-            reader = csv.DictReader(decoded_file)
-            for row in reader:
-                name = row['name']
-                price = row['price']
-                # Process other fields as needed
-
-                # Create product object
-                product = Product(name=name, price=price)
-                # Set other fields
-
-                product.save()
-
-            # Redirect to a page displaying the product list
-            return redirect('product_list')
-
-    else:
-        form = BulkProductUploadForm()
-
-    return render(request, 'bulk_product_upload.html', {'form': form})
+import random
 
 
 def search(request):
@@ -122,16 +95,18 @@ def profileUser(request):
     return render(request, "profile.html", {'user': user, 'order': order})
 
 
+@login_required(login_url='login_user')
 def customer_detail(request, customer_id):
     customer = get_object_or_404(Customer, pk=customer_id)
     return render(request, 'customer_detail.html', {'customer': customer})
 
 
 def product_list(request):
-    products = Product.objects.all()
+    # products = Product.objects.all()
+    products = Product.objects.order_by('?')
+
     categories = Category.objects.all()
     categoryId = request.GET.get("category")
-
     if categoryId:  # filter products
         category = Category.objects.get(id=categoryId)
         products = Product.objects.filter(product_category=category)
@@ -209,12 +184,12 @@ def cart(request):
                 cart_item.save()
 
         # Send email to the customer with order details
-        order_details = f"Order ID: {order.id}\n\n"
+        order_details = f"Mr/Mrs: {user_r.username} \n\nYour Order details \nOrder ID: {order.id}\n\n"
         order_details += "Order Items:\n"
         for item in cart.values():
             product = Product.objects.get(pk=item['product_id'])
-            order_details += f"\nProduct: {product.product_name},\nQuantity: {item['quantity']}\n"
-
+            order_details += f"\nProduct: {product.product_name},\nQuantity: {item['quantity']}, Price:{product.price}, Total:{ product.price * item['quantity']} \n"
+        order_details += "\n\nThanks For Purchasing."
         send_mail(
             'Order Confirmation',
             order_details,
@@ -266,6 +241,7 @@ def ShippingAddress(request):
     print("\n in shipping ad \n ")
     print("request.method :", request.method)
     if request.method == 'POST':
+        contact = request.POST.get('contact')
         shipping_address = request.POST.get('shipping_address')
         shipping_city = request.POST.get('shipping_city')
         shipping_state = request.POST.get('shipping_state')
@@ -277,6 +253,7 @@ def ShippingAddress(request):
         # Create a new ShippingAddress object with the submitted data
         new_shipping_address = Shipping_Address(
             customer=request.user,
+            contact=contact,
             shipping_address=shipping_address,
             shipping_city=shipping_city,
             shipping_state=shipping_state,
@@ -286,8 +263,6 @@ def ShippingAddress(request):
 
         # Save the new ShippingAddress object to the database
         new_shipping_address.save()
-        print(" out shipping ad\n")
-
         return
     else:
         # If the request method is not POST, render the shipping address form
