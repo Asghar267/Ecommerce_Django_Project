@@ -55,7 +55,7 @@
 
 <div class="container-fluid my-3">
   <div class="row">
-    <div class="col-lg-2">
+    <!-- <div class="col-lg-2">
       <div class="list-group">
         <a href="/" class="list-group-item list-group-item-action">All Products</a>
         <br>
@@ -64,19 +64,17 @@
 
         <a href="/?category={{category.id}}"
           class="list-group-item list-group-item-action table table-hover">{{category.name}}</a>
-        <!-- <a href="/?category={{category.id}}" class="list-group-item list-group-item-action hover">{{category.name}}</a> -->
-        <!-- <a href="/?category={{category.id}}" tyle="background-color: grey;" class="list-group-item list-group-item-action table table-hover">{{category.name}}</a> -->
-        {% endfor %}
+         {% endfor %}
       </div>
-    </div>
+    </div> -->
 
 
 
-    <div id="product" class="col-lg-10 mx-auto">
+    <div id="product" class="col-lg-12 mx-auto">
       <div class="row mx-auto">
         {% for product in products %}
 
-        <div class="card mx-auto mb-2 card-hover" id="{{product.id}}" style="width: 15rem;">
+        <div class="card mx-auto mb-4 card-hover" id="{{product.id}}" style="width: 16rem; height: 34rem;">
 
 
           <img src="{{ product.image }}" class="card-img-top" alt="https://via.placeholder.com/150" />
@@ -108,6 +106,7 @@
               {% if product.quantity == 0 %}
 
               <button type="submit" class="btn btn-primary add-to-cart-button disabled">Add Cart</button>
+              
               <a href="{% url 'product_detail' product.id %}"
                 class="btn btn-primary details_btn  mx-1 disabled">Details</a>
 

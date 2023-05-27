@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 import random
 
+ 
 
 def search(request):
     search_term = request.GET.get('q')
@@ -26,7 +27,7 @@ def register_user(request):
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         username = request.POST['username']
-        first_name = request.POST['full_name']
+        full_name = request.POST['full_name']
         email = request.POST['email']
         password = request.POST['password1']
         confirm_password = request.POST['password2']
@@ -43,13 +44,31 @@ def register_user(request):
             return redirect(register_user)
 
         user = User.objects.create_user(
-            first_name=first_name, username=username, email=email, password=password)
+            first_name=full_name, username=username, email=email, password=password)
         user.save()
         messages.success(
             request, "Registration successful. You can now log in.")
 
         # print("Field Error:", field.name,  field.errors) # debugging
         # print("Form Error:", form.errors)
+
+
+
+          # Send email to the customer with order details
+        order_details = f"Mr/Mrs. {full_name},"
+        order_details =+   f"\nThank you for registering with our website! We are excited to have you as a new member of our community. Your registration details are as follows:"
+        order_details =+ f"\nUsername: {username}\nEmail: {email}" 
+        order_details =+ f"\nPlease keep this information safe for your records. \nYou can now log in to our website using your registered credentials and explore all the features and benefits we offer."
+        order_details =+ f"\nBest regards,\nAsghar Abbasi"
+
+        send_mail(
+            'Registration Confirmation',
+            order_details,
+            'asgharabbasikalhoro@gmail.com',  # Replace with your email address
+            [email],  # Send email to the customer's email address
+            fail_silently=False,
+        )
+
 
         redirect('login_user')
 
@@ -94,7 +113,6 @@ def profileUser(request):
     print("order :", order)
     return render(request, "profile.html", {'user': user, 'order': order})
 
-
 @login_required(login_url='login_user')
 def customer_detail(request, customer_id):
     customer = get_object_or_404(Customer, pk=customer_id)
@@ -102,9 +120,7 @@ def customer_detail(request, customer_id):
 
 
 def product_list(request):
-    # products = Product.objects.all()
-    products = Product.objects.order_by('?')
-
+    products = Product.objects.all()
     categories = Category.objects.all()
     categoryId = request.GET.get("category")
     if categoryId:  # filter products
