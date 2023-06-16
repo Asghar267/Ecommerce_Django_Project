@@ -54,12 +54,14 @@ def register_user(request):
 
 
 
-          # Send email to the customer with order details
-        order_details = f"Mr/Mrs. {full_name},"
-        order_details =+   f"\nThank you for registering with our website! We are excited to have you as a new member of our community. Your registration details are as follows:"
-        order_details =+ f"\nUsername: {username}\nEmail: {email}" 
-        order_details =+ f"\nPlease keep this information safe for your records. \nYou can now log in to our website using your registered credentials and explore all the features and benefits we offer."
-        order_details =+ f"\nBest regards,\nAsghar Abbasi"
+        # Send email to the customer with order details
+        order_details = f"Mr/Mrs. {full_name},\n"
+        order_details += f"\nThank you for registering with our website! We are excited to have you as a new member of our community.\n\nYour registration details are as follows:"
+        order_details += f"\nUsername: {username}\nEmail: {email}" 
+        order_details += f"\n\nPlease keep this information safe for your records. \nYou can now log in to our website using your registered credentials and explore all the features and benefits we offer."
+        order_details += f"\n\nBest regards,\nAsghar Abbasi"
+        order_details += f"\n\nLinkedIn: https://www.linkedin.com/in/asghar267/"
+        
 
         send_mail(
             'Registration Confirmation',
@@ -68,9 +70,9 @@ def register_user(request):
             [email],  # Send email to the customer's email address
             fail_silently=False,
         )
-
-
-        redirect('login_user')
+        
+        print(f"register {username} email sent to {email}")
+        return redirect('login_user')
 
     context = {"form": form}
     return render(request, "register.html", context)
@@ -206,6 +208,8 @@ def cart(request):
             product = Product.objects.get(pk=item['product_id'])
             order_details += f"\nProduct: {product.product_name},\nQuantity: {item['quantity']}, Price:{product.price}, Total:{ product.price * item['quantity']} \n"
         order_details += "\n\nThanks For Purchasing."
+        order_details += f"\n\nBest regards,\nAsghar Abbasi"
+        order_details += f"\n\nLinkedIn: https://www.linkedin.com/in/asghar267/"
         send_mail(
             'Order Confirmation',
             order_details,
