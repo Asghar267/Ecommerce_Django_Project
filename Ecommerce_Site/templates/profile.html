@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load cart_tags %}
+{% block title %}<title>User Profile - E-commerce Site</title>{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="text-center mb-0">My Profile</h2>
+        </div>
+        <div class="card-body">
+          <h4>Personal Information:</h4>
+          {% for u in user %}
+          <p>Name: {{u.username}}</p>
+          <p>Email: {{u.email}}</p>
+          {% endfor %}
+          <p>Billing Address: 123 Main St, Anytown, USA</p>
+          <p>Shipping Address: 123 Main St, Anytown, USA</p>
+          <hr />
+          <h4>Order History:</h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Order Date</th>
+                <th>Image</th>
+                <th>Items Purchased</th>
+                <th>Qty</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for or in order %}
+              <tr>
+                <td>{{or.order_date}}</td>
+                <td>
+                  <img style="height: 80px" class="rounded-circle" src="{{  or.orderitem.product.image.url }}" alt="" />
+                </td>
+                <td>{{or.orderitem}}</td>
+                <td>{{or.quantity}}</td>
+
+
+                <td>{{ or|price_total_profile }}</td>
+                {% if or.status == "pending" %}
+                <td>
+                  <span class="badge bg-warning text-dark">Pending</span>
+                </td>
+                <!-- yellow background with dark text color -->
+
+                {% elif or.status == "processing" %}
+                <td>
+                  <span class="badge bg-info text-dark">Processing</span>
+                </td>
+                <!-- blue background with dark text color -->
+
+                {% elif or.status == "shipped" %}
+                <td>
+                  <span class="badge bg-primary text-light">Shipped</span>
+                </td>
+                <!-- dark blue background with light text color -->
+
+                {% elif or.status == "delivered" %}
+                <td>
+                  <span class="badge bg-success text-light">Delivered</span>
+                </td>
+                <!-- green background with light text color -->
+
+                {% else %} {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <hr />
+          <h4>Wishlist:</h4>
+          <ul>
+            <li>Product 4</li>
+            <li>Product 5</li>
+          </ul>
+          <hr />
+          <h4>Reviews and Ratings:</h4>
+          <p>You have not yet left any reviews or ratings.</p>
+          <hr />
+          <h4>Rewards Program:</h4>
+          <p>You currently have 100 rewards points.</p>
+          <p>You have earned a $5 reward.</p>
+          <hr />
+          <h4>Account Settings:</h4>
+          <form>
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input type="text" class="form-control" id="name" value="John Smith" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email" value="johnsmith@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="billing">Billing Address:</label>
+              <textarea class="form-control" id="billing" rows="3">
+123 Main St
+                                    Anytown, USA</textarea>
+            </div>
+            <div class="form-group">
+              <label for="shipping">Shipping Address:</label>
+              <textarea class="form-control" id="shipping" rows="3">
+123 Main St
+                                Anytown, USA</textarea>
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" class="form-control" id="password" />
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
